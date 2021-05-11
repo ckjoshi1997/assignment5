@@ -11,6 +11,7 @@ function ItemRow({ item }) {
       <td>
         <a href={item.image} target="_blank" rel="noreferrer">View</a>
       </td>
+      <td><a href={`/#/edit/${item.id}`}>Edit</a></td>
     </tr>
   );
 }
@@ -28,6 +29,7 @@ export default function ItemTable({ items }) {
           <th>Price</th>
           <th>Category</th>
           <th>Image</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
