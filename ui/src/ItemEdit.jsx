@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import graphQLFetch from './graphQLFetch.js';
+import NumInput from './NumInput.jsx';
+import TextInput from './TextInput.jsx';
 
 export default class ItemEdit extends React.Component {
   constructor() {
@@ -25,17 +27,36 @@ export default class ItemEdit extends React.Component {
     }
   }
 
-  onChange(event) {
-    const { name, value } = event.target;
+  onChange(event, naturalValue) {
+    const { name, value: textValue } = event.target;
+    const value = naturalValue === undefined ? textValue : naturalValue;
     this.setState(prevState => ({
       item: { ...prevState.item, [name]: value },
     }));
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault();
-    const { item } = this.state;
-    console.log(item); // eslint-disable-line no-console
+    const { item, invalidFields } = this.state;
+    if (Object.keys(invalidFields).length !== 0) return;
+    const query = `mutation itemUpdate(
+      $id: Int!
+      $changes: ItemUpdateInputs!
+    ) {
+      itemUpdate(
+        id: $id
+        changes: $changes
+      ) {
+        id name category image
+        price description
+      }
+    }`;
+    const { id, created, ...changes } = item;
+    const data = await graphQLFetch(query, { changes, id });
+    if (data) {
+      this.setState({ item: data.itemUpdate });
+      alert('Updated item successfully'); // eslint-disable-line no-alert
+    }
   }
 
   async loadData() {
@@ -47,15 +68,7 @@ export default class ItemEdit extends React.Component {
     }`;
     const { match: { params: { id } } } = this.props;
     const data = await graphQLFetch(query, { id });
-    if (data) {
-      const { item } = data;
-      item.price = item.price != null ? item.price.toString() : '';
-      item.image = item.image != null ? item.image : '';
-      item.description = item.description != null ? item.description : '';
-      this.setState({ item });
-    } else {
-      this.setState({ item: {} });
-    }
+    this.setState({ item: data ? data.item : {}, invalidFields: {} });
   }
 
   render() {
@@ -90,43 +103,48 @@ export default class ItemEdit extends React.Component {
             <tr>
               <td>Image:</td>
               <td>
-                <input
+                <TextInput
                   name="image"
                   value={image}
                   onChange={this.onChange}
+                  key={id}
                 />
               </td>
             </tr>
             <tr>
               <td>Price:</td>
               <td>
-                <input
+                <NumInput
                   name="price"
                   value={price}
                   onChange={this.onChange}
+                  key={id}
                 />
               </td>
             </tr>
             <tr>
               <td>Name:</td>
               <td>
-                <input
+                <TextInput
                   size={50}
                   name="name"
                   value={name}
                   onChange={this.onChange}
+                  key={id}
                 />
               </td>
             </tr>
             <tr>
               <td>Description:</td>
               <td>
-                <textarea
+                <TextInput
+                  tag="textarea"
                   rows={8}
                   cols={50}
                   name="description"
                   value={description}
                   onChange={this.onChange}
+                  key={id}
                 />
               </td>
             </tr>

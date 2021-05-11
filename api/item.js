@@ -29,4 +29,30 @@ async function add(_, { item }) {
   return savedItem;
 }
 
-module.exports = { list, add, get };
+async function update(_, { id, changes }) {
+  const db = getDb();
+  if (changes.title || changes.status || changes.owner) {
+    const item = await db.collection('items').findOne({ id });
+    Object.assign(item, changes);
+  }
+  await db.collection('items').updateOne({ id }, { $set: changes });
+  const savedItem = await db.collection('items').findOne({ id });
+  return savedItem;
+}
+
+async function remove(_, { id }) {
+  const db = getDb();
+  const item = await db.collection('items').findOne({ id });
+  if (!item) return false;
+  item.deleted = new Date();
+  let result = await db.collection('deleted_items').insertOne(item);
+  if (result.insertedId) {
+    result = await db.collection('items').removeOne({ id });
+    return result.deletedCount === 1;
+  }
+  return false;
+}
+
+module.exports = {
+  list, add, get, update, delete: remove,
+};

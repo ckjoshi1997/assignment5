@@ -13,6 +13,7 @@
 /* eslint no-restricted-globals: "off" */
 
 db.items.remove({});
+db.deleted_items.remove({});
 
 const itemsDB = [
   {
@@ -49,6 +50,7 @@ db.counters.remove({ _id: 'items' });
 db.counters.insert({ _id: 'items', current: count });
 
 db.items.createIndex({ id: 1 }, { unique: true });
-db.items.createIndex({ status: 1 });
-db.items.createIndex({ owner: 1 });
-db.items.createIndex({ created: 1 });
+db.items.createIndex({ category: 1 });
+db.items.createIndex({ name: 1 });
+db.items.createIndex({ image: 1 });
+db.deleted_items.createIndex({ id: 1 }, { unique: true });

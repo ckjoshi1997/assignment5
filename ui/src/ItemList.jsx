@@ -17,6 +17,7 @@ export default class ItemList extends React.Component {
     super();
     this.state = { items: [] };
     this.createItem = this.createItem.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
   }
 
   componentDidMount() {
@@ -81,6 +82,28 @@ export default class ItemList extends React.Component {
     }
   }
 
+  async deleteItem(index) {
+    const query = `mutation itemDelete($id: Int!) {
+      itemDelete(id: $id)
+    }`;
+    const { items } = this.state;
+    const { location: { pathname, search }, history } = this.props;
+    const { id } = items[index];
+    const data = await graphQLFetch(query, { id });
+    if (data && data.itemDelete) {
+      this.setState((prevState) => {
+        const newList = [...prevState.items];
+        if (pathname === `/items/${id}`) {
+          history.push({ pathname: '/items', search });
+        }
+        newList.splice(index, 1);
+        return { items: newList };
+      });
+    } else {
+      this.loadData();
+    }
+  }
+
   render() {
     const { items } = this.state;
     const { match } = this.props;
@@ -90,7 +113,7 @@ export default class ItemList extends React.Component {
         <hr />
         <ItemFilter />
         <hr />
-        <ItemTable items={items} />
+        <ItemTable items={items} deleteItem={this.deleteItem} />
         <hr />
         <ItemAdd createItem={this.createItem} />
         <hr />

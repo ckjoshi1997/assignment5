@@ -11,6 +11,8 @@ const resolvers = {
   },
   Mutation: {
     itemAdd: item.add,
+    itemUpdate: item.update,
+    itemDelete: item.delete,
   },
 };
 
