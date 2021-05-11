@@ -1,14 +1,44 @@
 import React from 'react';
+import URLSearchParams from 'url-search-params';
 import { withRouter } from 'react-router-dom';
 
 class ItemFilter extends React.Component {
-  constructor() {
+  constructor({ location: { search } }) {
     super();
+    const params = new URLSearchParams(search);
+    this.state = {
+      category: params.get('category') || '',
+      changed: false,
+    };
+
     this.onChangeCategory = this.onChangeCategory.bind(this);
+    this.applyFilter = this.applyFilter.bind(this);
+    this.showOriginalFilter = this.showOriginalFilter.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { location: { search: prevSearch } } = prevProps;
+    const { location: { search } } = this.props;
+    if (prevSearch !== search) {
+      this.showOriginalFilter();
+    }
   }
 
   onChangeCategory(e) {
-    const category = e.target.value;
+    this.setState({ category: e.target.value, changed: true });
+  }
+
+  showOriginalFilter() {
+    const { location: { search } } = this.props;
+    const params = new URLSearchParams(search);
+    this.setState({
+      category: params.get('category') || '',
+      changed: false,
+    });
+  }
+
+  applyFilter() {
+    const { category } = this.state;
     const { history } = this.props;
     history.push({
       pathname: '/items',
@@ -17,11 +47,12 @@ class ItemFilter extends React.Component {
   }
 
   render() {
+    const { category, changed } = this.state;
     return (
       <div>
         Category:
         {' '}
-        <select onChange={this.onChangeCategory}>
+        <select value={category} onChange={this.onChangeCategory}>
           <option value="">(All)</option>
           <option value="Jeans">Jeans</option>
           <option value="Shirts">Shirts</option>
@@ -29,6 +60,16 @@ class ItemFilter extends React.Component {
           <option value="Sweaters">Sweaters</option>
           <option value="Accessories">Accessories</option>
         </select>
+        {' '}
+        <button type="button" onClick={this.applyFilter}>Apply</button>
+        {' '}
+        <button
+          type="button"
+          onClick={this.showOriginalFilter}
+          disabled={!changed}
+        >
+          Reset
+        </button>
       </div>
     );
   }

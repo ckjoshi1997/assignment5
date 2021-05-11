@@ -137,7 +137,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
 /******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
@@ -193,7 +193,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var element = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["HashRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_Page_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], null));
+var element = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_Page_jsx__WEBPACK_IMPORTED_MODULE_5__["default"], null));
 
 if (false) {}
 
@@ -556,7 +556,9 @@ function ItemEdit(_ref) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var url_search_params__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! url-search-params */ "./node_modules/url-search-params/build/url-search-params.node.js");
+/* harmony import */ var url_search_params__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(url_search_params__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -582,25 +584,63 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var ItemFilter = /*#__PURE__*/function (_React$Component) {
   _inherits(ItemFilter, _React$Component);
 
   var _super = _createSuper(ItemFilter);
 
-  function ItemFilter() {
+  function ItemFilter(_ref) {
     var _this;
+
+    var search = _ref.location.search;
 
     _classCallCheck(this, ItemFilter);
 
     _this = _super.call(this);
+    var params = new url_search_params__WEBPACK_IMPORTED_MODULE_1___default.a(search);
+    _this.state = {
+      category: params.get('category') || '',
+      changed: false
+    };
     _this.onChangeCategory = _this.onChangeCategory.bind(_assertThisInitialized(_this));
+    _this.applyFilter = _this.applyFilter.bind(_assertThisInitialized(_this));
+    _this.showOriginalFilter = _this.showOriginalFilter.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(ItemFilter, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      var prevSearch = prevProps.location.search;
+      var search = this.props.location.search;
+
+      if (prevSearch !== search) {
+        this.showOriginalFilter();
+      }
+    }
+  }, {
     key: "onChangeCategory",
     value: function onChangeCategory(e) {
-      var category = e.target.value;
+      this.setState({
+        category: e.target.value,
+        changed: true
+      });
+    }
+  }, {
+    key: "showOriginalFilter",
+    value: function showOriginalFilter() {
+      var search = this.props.location.search;
+      var params = new url_search_params__WEBPACK_IMPORTED_MODULE_1___default.a(search);
+      this.setState({
+        category: params.get('category') || '',
+        changed: false
+      });
+    }
+  }, {
+    key: "applyFilter",
+    value: function applyFilter() {
+      var category = this.state.category;
       var history = this.props.history;
       history.push({
         pathname: '/items',
@@ -610,7 +650,11 @@ var ItemFilter = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this$state = this.state,
+          category = _this$state.category,
+          changed = _this$state.changed;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Category:", ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        value: category,
         onChange: this.onChangeCategory
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: ""
@@ -624,14 +668,21 @@ var ItemFilter = /*#__PURE__*/function (_React$Component) {
         value: "Sweaters"
       }, "Sweaters"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: "Accessories"
-      }, "Accessories")));
+      }, "Accessories")), ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        onClick: this.applyFilter
+      }, "Apply"), ' ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        onClick: this.showOriginalFilter,
+        disabled: !changed
+      }, "Reset"));
     }
   }]);
 
   return ItemFilter;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["withRouter"])(ItemFilter));
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(ItemFilter));
 
 /***/ }),
 
