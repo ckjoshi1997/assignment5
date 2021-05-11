@@ -27,7 +27,11 @@ input ProductInputs {
 ##### Top level declarations
 
 type Query {
-  productList(category: ProductType): [Product!]!
+  productList(
+    category: ProductType
+    priceMin: Float
+    priceMax: Float
+  ): [Product!]!
   product(id: Int!): Product!
 }
 

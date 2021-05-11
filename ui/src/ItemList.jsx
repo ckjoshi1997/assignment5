@@ -37,8 +37,21 @@ export default class ItemList extends React.Component {
     const vars = {};
     if (params.get('category')) vars.category = params.get('category');
 
-    const query = `query productList($category: ProductType) {
-      productList(category: $category) {
+    const priceMin = parseInt(params.get('priceMin'), 10);
+    if (!Number.isNaN(priceMin)) vars.priceMin = priceMin;
+    const priceMax = parseInt(params.get('priceMax'), 10);
+    if (!Number.isNaN(priceMax)) vars.priceMax = priceMax;
+
+    const query = `query productList(
+      $category: ProductType
+      $priceMin: Float
+      $priceMax: Float
+    ) {
+      productList(
+        category: $category
+        priceMin: $priceMin
+        priceMax: $priceMax
+      ) {
         id category name price image
       }
     }`;

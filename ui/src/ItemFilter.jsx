@@ -8,12 +8,16 @@ class ItemFilter extends React.Component {
     const params = new URLSearchParams(search);
     this.state = {
       category: params.get('category') || '',
+      priceMin: params.get('priceMin') || '',
+      priceMax: params.get('priceMax') || '',
       changed: false,
     };
 
-    this.onChangeCategory = this.onChangeCategory.bind(this);
     this.applyFilter = this.applyFilter.bind(this);
     this.showOriginalFilter = this.showOriginalFilter.bind(this);
+    this.onChangeCategory = this.onChangeCategory.bind(this);
+    this.onChangePriceMin = this.onChangePriceMin.bind(this);
+    this.onChangePriceMax = this.onChangePriceMax.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -28,26 +32,46 @@ class ItemFilter extends React.Component {
     this.setState({ category: e.target.value, changed: true });
   }
 
+  onChangePriceMin(e) {
+    const priceString = e.target.value;
+    if (priceString.match(/^\d*$/)) {
+      this.setState({ priceMin: e.target.value, changed: true });
+    }
+  }
+
+  onChangePriceMax(e) {
+    const priceString = e.target.value;
+    if (priceString.match(/^\d*$/)) {
+      this.setState({ priceMax: e.target.value, changed: true });
+    }
+  }
+
   showOriginalFilter() {
     const { location: { search } } = this.props;
     const params = new URLSearchParams(search);
     this.setState({
       category: params.get('category') || '',
+      priceMin: params.get('priceMin') || '',
+      priceMax: params.get('priceMax') || '',
       changed: false,
     });
   }
 
   applyFilter() {
-    const { category } = this.state;
+    const { category, priceMin, priceMax } = this.state;
     const { history } = this.props;
-    history.push({
-      pathname: '/items',
-      search: category ? `?category=${category}` : '',
-    });
+
+    const params = new URLSearchParams();
+    if (category) params.set('category', category);
+    if (priceMin) params.set('priceMin', priceMin);
+    if (priceMax) params.set('priceMax', priceMax);
+    const search = params.toString() ? `?${params.toString()}` : '';
+    history.push({ pathname: '/items', search });
   }
 
   render() {
     const { category, changed } = this.state;
+    const { priceMin, priceMax } = this.state;
     return (
       <div>
         Category:
@@ -60,6 +84,20 @@ class ItemFilter extends React.Component {
           <option value="Sweaters">Sweaters</option>
           <option value="Accessories">Accessories</option>
         </select>
+        {' '}
+        Price between:
+        {' '}
+        <input
+          size={5}
+          value={priceMin}
+          onChange={this.onChangePriceMin}
+        />
+        {' - '}
+        <input
+          size={5}
+          value={priceMax}
+          onChange={this.onChangePriceMax}
+        />
         {' '}
         <button type="button" onClick={this.applyFilter}>Apply</button>
         {' '}

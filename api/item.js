@@ -7,10 +7,15 @@ async function get(_, { id }) {
   return product;
 }
 
-async function list(_, { category }) {
+async function list(_, { category, priceMin, priceMax }) {
   const db = getDb();
   const filter = {};
   if (category) filter.category = category;
+  if (priceMin !== undefined || priceMax !== undefined) {
+    filter.price = {};
+    if (priceMin !== undefined) filter.price.$gte = priceMin;
+    if (priceMax !== undefined) filter.price.$lte = priceMax;
+  }
   const products = await db.collection('products').find(filter).toArray();
   return products;
 }
