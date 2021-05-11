@@ -59,7 +59,7 @@ export default class ItemAdd extends React.Component {
         </label>
 
         <label htmlFor="name">
-          Product Name
+          Item Name
           <input type="text" name="name" />
         </label>
 
@@ -68,7 +68,7 @@ export default class ItemAdd extends React.Component {
           <input type="text" name="image" />
         </label>
 
-        <button>Add Product</button>
+        <button>Add Item</button>
       </form>
     );
   }

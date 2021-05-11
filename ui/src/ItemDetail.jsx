@@ -21,14 +21,14 @@ export default class ItemDetail extends React.Component {
 
   async loadData() {
     const { match: { params: { id } } } = this.props;
-    const query = `query product($id: Int!) {
-      product (id: $id) {
+    const query = `query item($id: Int!) {
+      item (id: $id) {
         id description
       }
     }`;
     const data = await graphQLFetch(query, { id });
     if (data) {
-      this.setState({ item: data.product });
+      this.setState({ item: data.item });
     } else {
       this.setState({ item: {} });
     }

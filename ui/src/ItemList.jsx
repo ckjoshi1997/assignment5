@@ -42,12 +42,12 @@ export default class ItemList extends React.Component {
     const priceMax = parseInt(params.get('priceMax'), 10);
     if (!Number.isNaN(priceMax)) vars.priceMax = priceMax;
 
-    const query = `query productList(
-      $category: ProductType
+    const query = `query itemList(
+      $category: ItemType
       $priceMin: Float
       $priceMax: Float
     ) {
-      productList(
+      itemList(
         category: $category
         priceMin: $priceMin
         priceMax: $priceMax
@@ -58,14 +58,14 @@ export default class ItemList extends React.Component {
 
     const data = await graphQLFetch(query, vars);
     if (data) {
-      this.setState({ items: data.productList });
+      this.setState({ items: data.itemList });
     }
   }
 
   // create item and add to graphql
   async createItem(item) {
     const query = `mutation {
-        productAdd(product:{
+        itemAdd(item:{
             name: "${item.name}",
             category: ${item.category},
             price: ${item.price},

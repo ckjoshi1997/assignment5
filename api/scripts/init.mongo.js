@@ -4,7 +4,7 @@
  * localhost:
  *   mongo issuetracker scripts/init.mongo.js
  * Atlas:
- *   mongo mongodb+srv://cjoshi:Yash2010@cs-648-02.sy6oc.mongodb.net/products scripts/init.mongo.js
+ *   mongo mongodb+srv://cjoshi:Yash2010@cs-648-02.sy6oc.mongodb.net/items scripts/init.mongo.js
  * MLab:
  *   mongo mongodb://user:pwd@xxx.mlab.com:33533/issuetracker scripts/init.mongo.js
  */
@@ -12,15 +12,15 @@
 /* global db print */
 /* eslint no-restricted-globals: "off" */
 
-db.products.remove({});
+db.items.remove({});
 
-const productsDB = [
+const itemsDB = [
   {
     id: 1,
     name: 'Test Jeans',
     category: 'Jeans',
     price: 42.42,
-    image: 'https://cdn7.bigcommerce.com/s-8a33z/product_images/uploaded_images/mens-size-42-jeans-thumb-w500.png',
+    image: 'https://cdn7.bigcommerce.com/s-8a33z/item_images/uploaded_images/mens-size-42-jeans-thumb-w500.png',
     description: 'Steps to recreate the problem:'
       + '\n1. Refresh the browser.'
       + '\n2. Select "New" in the filter'
@@ -41,14 +41,14 @@ const productsDB = [
   },
 ];
 
-db.products.insertMany(productsDB);
-const count = db.products.count();
-print('Inserted', count, 'products');
+db.items.insertMany(itemsDB);
+const count = db.items.count();
+print('Inserted', count, 'items');
 
-db.counters.remove({ _id: 'products' });
-db.counters.insert({ _id: 'products', current: count });
+db.counters.remove({ _id: 'items' });
+db.counters.insert({ _id: 'items', current: count });
 
-db.products.createIndex({ id: 1 }, { unique: true });
-db.products.createIndex({ status: 1 });
-db.products.createIndex({ owner: 1 });
-db.products.createIndex({ created: 1 });
+db.items.createIndex({ id: 1 }, { unique: true });
+db.items.createIndex({ status: 1 });
+db.items.createIndex({ owner: 1 });
+db.items.createIndex({ created: 1 });

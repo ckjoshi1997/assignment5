@@ -373,7 +373,7 @@ var ItemAdd = /*#__PURE__*/function (_React$Component) {
         }
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "name"
-      }, "Product Name", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      }, "Item Name", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "name"
       })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -381,7 +381,7 @@ var ItemAdd = /*#__PURE__*/function (_React$Component) {
       }, "Image URL", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "image"
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Add Product"));
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", null, "Add Item"));
     }
   }]);
 
@@ -476,7 +476,7 @@ var ItemDetail = /*#__PURE__*/function (_React$Component) {
             switch (_context.prev = _context.next) {
               case 0:
                 id = this.props.match.params.id;
-                query = "query product($id: Int!) {\n      product (id: $id) {\n        id description\n      }\n    }";
+                query = "query item($id: Int!) {\n      item (id: $id) {\n        id description\n      }\n    }";
                 _context.next = 4;
                 return Object(_graphQLFetch_js__WEBPACK_IMPORTED_MODULE_1__["default"])(query, {
                   id: id
@@ -487,7 +487,7 @@ var ItemDetail = /*#__PURE__*/function (_React$Component) {
 
                 if (data) {
                   this.setState({
-                    item: data.product
+                    item: data.item
                   });
                 } else {
                   this.setState({
@@ -536,12 +536,214 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return ItemEdit; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var _graphQLFetch_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./graphQLFetch.js */ "./src/graphQLFetch.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-function ItemEdit(_ref) {
-  var match = _ref.match;
-  var id = match.params.id;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "This is a placeholder for editing issue ".concat(id));
-}
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+var ItemEdit = /*#__PURE__*/function (_React$Component) {
+  _inherits(ItemEdit, _React$Component);
+
+  var _super = _createSuper(ItemEdit);
+
+  function ItemEdit() {
+    var _this;
+
+    _classCallCheck(this, ItemEdit);
+
+    _this = _super.call(this);
+    _this.state = {
+      item: {}
+    };
+    _this.onChange = _this.onChange.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(ItemEdit, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      var prevId = prevProps.match.params.id;
+      var id = this.props.match.params.id;
+
+      if (id !== prevId) {
+        this.loadData();
+      }
+    }
+  }, {
+    key: "onChange",
+    value: function onChange(event) {
+      var _event$target = event.target,
+          name = _event$target.name,
+          value = _event$target.value;
+      this.setState(function (prevState) {
+        return {
+          item: _objectSpread(_objectSpread({}, prevState.item), {}, _defineProperty({}, name, value))
+        };
+      });
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var item = this.state.item;
+      console.log(item); // eslint-disable-line no-console
+    }
+  }, {
+    key: "loadData",
+    value: function () {
+      var _loadData = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var query, id, data, item;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                query = "query item($id: Int!) {\n      item(id: $id) {\n        id name category image\n        price description\n      }\n    }";
+                id = this.props.match.params.id;
+                _context.next = 4;
+                return Object(_graphQLFetch_js__WEBPACK_IMPORTED_MODULE_2__["default"])(query, {
+                  id: id
+                });
+
+              case 4:
+                data = _context.sent;
+
+                if (data) {
+                  item = data.item;
+                  item.price = item.price != null ? item.price.toString() : '';
+                  item.image = item.image != null ? item.image : '';
+                  item.description = item.description != null ? item.description : '';
+                  this.setState({
+                    item: item
+                  });
+                } else {
+                  this.setState({
+                    item: {}
+                  });
+                }
+
+              case 6:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function loadData() {
+        return _loadData.apply(this, arguments);
+      }
+
+      return loadData;
+    }()
+  }, {
+    key: "render",
+    value: function render() {
+      var id = this.state.item.id;
+      var propsId = this.props.match.params.id;
+
+      if (id == null) {
+        if (propsId != null) {
+          return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Item with ID ".concat(propsId, " not found."));
+        }
+
+        return null;
+      }
+
+      var _this$state$item = this.state.item,
+          name = _this$state$item.name,
+          category = _this$state$item.category;
+      var _this$state$item2 = this.state.item,
+          image = _this$state$item2.image,
+          price = _this$state$item2.price,
+          description = _this$state$item2.description;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.handleSubmit
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Editing item: ".concat(id)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Category:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        name: "category",
+        value: category,
+        onChange: this.onChange
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Jeans"
+      }, "Jeans"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Shirts"
+      }, "Shirts"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Jackets"
+      }, "Jackets"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Sweaters"
+      }, "Sweaters"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "Accessories"
+      }, "Accessories")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Image:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        name: "image",
+        value: image,
+        onChange: this.onChange
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Price:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        name: "price",
+        value: price,
+        onChange: this.onChange
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Name:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        size: 50,
+        name: "name",
+        value: name,
+        onChange: this.onChange
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, "Description:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        rows: 8,
+        cols: 50,
+        name: "description",
+        value: description,
+        onChange: this.onChange
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "submit"
+      }, "Submit"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/edit/".concat(id - 1)
+      }, "Prev"), ' | ', /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+        to: "/edit/".concat(id + 1)
+      }, "Next"));
+    }
+  }]);
+
+  return ItemEdit;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+
 
 /***/ }),
 
@@ -841,7 +1043,7 @@ var ItemList = /*#__PURE__*/function (_React$Component) {
                 if (!Number.isNaN(priceMin)) vars.priceMin = priceMin;
                 priceMax = parseInt(params.get('priceMax'), 10);
                 if (!Number.isNaN(priceMax)) vars.priceMax = priceMax;
-                query = "query productList(\n      $category: ProductType\n      $priceMin: Float\n      $priceMax: Float\n    ) {\n      productList(\n        category: $category\n        priceMin: $priceMin\n        priceMax: $priceMax\n      ) {\n        id category name price image\n      }\n    }";
+                query = "query itemList(\n      $category: ItemType\n      $priceMin: Float\n      $priceMax: Float\n    ) {\n      itemList(\n        category: $category\n        priceMin: $priceMin\n        priceMax: $priceMax\n      ) {\n        id category name price image\n      }\n    }";
                 _context.next = 11;
                 return Object(_graphQLFetch_js__WEBPACK_IMPORTED_MODULE_7__["default"])(query, vars);
 
@@ -850,7 +1052,7 @@ var ItemList = /*#__PURE__*/function (_React$Component) {
 
                 if (data) {
                   this.setState({
-                    items: data.productList
+                    items: data.itemList
                   });
                 }
 
@@ -878,7 +1080,7 @@ var ItemList = /*#__PURE__*/function (_React$Component) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                query = "mutation {\n        productAdd(product:{\n            name: \"".concat(item.name, "\",\n            category: ").concat(item.category, ",\n            price: ").concat(item.price, ",\n            image: \"").concat(item.image, "\", \n        }) {\n                id\n            }\n        }");
+                query = "mutation {\n        itemAdd(item:{\n            name: \"".concat(item.name, "\",\n            category: ").concat(item.category, ",\n            price: ").concat(item.price, ",\n            image: \"").concat(item.image, "\", \n        }) {\n                id\n            }\n        }");
                 _context2.next = 3;
                 return Object(_graphQLFetch_js__WEBPACK_IMPORTED_MODULE_7__["default"])(query, {
                   item: item
@@ -990,7 +1192,7 @@ function ItemTable(_ref2) {
   });
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
     className: "bordered-table"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Product Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Price"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Image"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Action"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, itemRows));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Item Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Price"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Image"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Action"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, itemRows));
 }
 
 /***/ }),

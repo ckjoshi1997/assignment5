@@ -31,7 +31,7 @@ export default function ItemTable({ items }) {
     <table className="bordered-table">
       <thead>
         <tr>
-          <th>Product Name</th>
+          <th>Item Name</th>
           <th>Price</th>
           <th>Category</th>
           <th>Image</th>
