@@ -25,7 +25,7 @@ input ProductInputs {
 ##### Top level declarations
 
 type Query {
-  productList: [Product!]!
+  productList(category: ProductType): [Product!]!
 }
 
 type Mutation {

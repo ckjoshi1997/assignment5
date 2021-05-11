@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function ItemRow({ item }) {
   return (
@@ -11,7 +12,7 @@ function ItemRow({ item }) {
       <td>
         <a href={item.image} target="_blank" rel="noreferrer">View</a>
       </td>
-      <td><a href={`/#/edit/${item.id}`}>Edit</a></td>
+      <td><Link to={`/edit/${item.id}`}>Edit</Link></td>
     </tr>
   );
 }
