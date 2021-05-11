@@ -13,6 +13,7 @@ type Product {
   name: String
   price: Float
   image: String
+  description: String
 }
 
 input ProductInputs {
@@ -20,12 +21,14 @@ input ProductInputs {
   name: String!
   price: Float!
   image: String
+  description: String
 }
 
 ##### Top level declarations
 
 type Query {
   productList(category: ProductType): [Product!]!
+  product(id: Int!): Product!
 }
 
 type Mutation {

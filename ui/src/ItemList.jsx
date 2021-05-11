@@ -3,9 +3,12 @@
 
 import React from 'react';
 import URLSearchParams from 'url-search-params';
+import { Route } from 'react-router-dom';
+
 import ItemFilter from './ItemFilter.jsx';
 import ItemTable from './ItemTable.jsx';
 import ItemAdd from './ItemAdd.jsx';
+import ItemDetail from './ItemDetail.jsx';
 import graphQLFetch from './graphQLFetch.js';
 
 // list class
@@ -67,6 +70,7 @@ export default class ItemList extends React.Component {
 
   render() {
     const { items } = this.state;
+    const { match } = this.props;
     return (
       <React.Fragment>
         <h1>My Company Inventory</h1>
@@ -76,6 +80,8 @@ export default class ItemList extends React.Component {
         <ItemTable items={items} />
         <hr />
         <ItemAdd createItem={this.createItem} />
+        <hr />
+        <Route path={`${match.path}/:id`} component={ItemDetail} />
       </React.Fragment>
     );
   }

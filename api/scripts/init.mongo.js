@@ -20,14 +20,24 @@ const productsDB = [
     name: 'Test Jeans',
     category: 'Jeans',
     price: 42.42,
-    image: 'Error in console when clicking Add',
+    image: 'https://cdn7.bigcommerce.com/s-8a33z/product_images/uploaded_images/mens-size-42-jeans-thumb-w500.png',
+    description: 'Steps to recreate the problem:'
+      + '\n1. Refresh the browser.'
+      + '\n2. Select "New" in the filter'
+      + '\n3. Refresh the browser again. Note the warning in the console:'
+      + '\n  Warning: Hash history cannot PUSH the same path; a new entry'
+      + '\n  will not be added to the history stack'
+      + '\n4. Click on Add.'
+      + '\n5. There is an error in console, and add doesn\'t work.',
   },
   {
     id: 2,
     name: 'Test Shirts',
     category: 'Shirts',
     price: 5.12,
-    image: 'Error in console when clicking Add',
+    image: 'https://target.scene7.com/is/image/Target/GUEST_8bce6d5a-75d1-45dc-93d7-2323f0959216?wid=488&hei=488&fmt=pjpeg',
+    description: 'There needs to be a border in the bottom in the panel'
+      + ' that appears when clicking on Add',
   },
 ];
 

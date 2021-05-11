@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink, withRouter } from 'react-router-dom';
 
-function ItemRow({ item }) {
+const ItemRow = withRouter(({ item, location: { search } }) => {
+  const selectLocation = { pathname: `/items/${item.id}`, search };
   return (
     <tr>
       {/* <td>{item.id}</td> */}
@@ -12,10 +13,14 @@ function ItemRow({ item }) {
       <td>
         <a href={item.image} target="_blank" rel="noreferrer">View</a>
       </td>
-      <td><Link to={`/edit/${item.id}`}>Edit</Link></td>
+      <td>
+        <Link to={`/edit/${item.id}`}>Edit</Link>
+        {' | '}
+        <NavLink to={selectLocation}>Select</NavLink>
+      </td>
     </tr>
   );
-}
+});
 
 export default function ItemTable({ items }) {
   const itemRows = items.map(item => (

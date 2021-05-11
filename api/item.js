@@ -1,6 +1,12 @@
 // const { UserInputError } = require('apollo-server-express');
 const { getDb, getNextSequence } = require('./db.js');
 
+async function get(_, { id }) {
+  const db = getDb();
+  const product = await db.collection('products').findOne({ id });
+  return product;
+}
+
 async function list(_, { category }) {
   const db = getDb();
   const filter = {};
@@ -18,4 +24,4 @@ async function add(_, { product }) {
   return savedProduct;
 }
 
-module.exports = { list, add };
+module.exports = { list, add, get };
