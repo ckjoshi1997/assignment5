@@ -5,7 +5,7 @@ function format(num) {
 }
 
 function unformat(str) {
-  const val = parseInt(str, 10);
+  const val = parseFloat(str, 10);
   return Number.isNaN(val) ? null : val;
 }
 

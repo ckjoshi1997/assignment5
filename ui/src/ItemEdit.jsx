@@ -150,13 +150,13 @@ export default class ItemEdit extends React.Component {
             </tr>
             <tr>
               <td />
-              <td><button type="submit">Submit</button></td>
+              <td><button type="submit">Submit Changes</button></td>
             </tr>
           </tbody>
         </table>
-        <Link to={`/edit/${id - 1}`}>Prev</Link>
+        <Link to={`/edit/${id - 1}`}>Prev Item</Link>
         {' | '}
-        <Link to={`/edit/${id + 1}`}>Next</Link>
+        <Link to={`/edit/${id + 1}`}>Next Item</Link>
       </form>
     );
   }
