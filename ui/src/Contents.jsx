@@ -1,7 +1,6 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
 import React from 'react';
-
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import ItemList from './ItemList.jsx';

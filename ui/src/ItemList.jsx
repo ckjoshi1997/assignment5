@@ -1,6 +1,8 @@
-/* globals React */
+
 /* eslint "react/jsx-no-undef": "off" */
 // import ItemFilter from './ItemFilter.jsx';
+import React from 'react';
+
 import ItemTable from './ItemTable.jsx';
 import ItemAdd from './ItemAdd.jsx';
 import graphQLFetch from './graphQLFetch.js';

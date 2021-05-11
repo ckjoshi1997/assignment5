@@ -1,4 +1,4 @@
-/* globals React */
+import React from 'react';
 
 function ItemRow({ item }) {
   return (

@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/button-has-type */
-/* globals React PropTypes */
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export default // class to add items
-class ItemAdd extends React.Component {
+export default class ItemAdd extends React.Component {
   // simple constructor, sets price state to blank
   constructor() {
     super();
